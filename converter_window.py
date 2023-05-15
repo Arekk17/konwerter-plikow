@@ -2,7 +2,7 @@ import sys
 import json
 import yaml
 import xml.etree.ElementTree as ET
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow, QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QFileDialog
 
 
 def load_json(file_path):
