@@ -1,0 +1,42 @@
+name: Build and Upload EXE
+
+on:
+  # Wywołanie ręczne przez użytkownika
+  workflow_dispatch:
+  # Automatyczne uruchomienie po pushowaniu do brancha master
+  push:
+    branches:
+      - master
+  # Automatyczne uruchomienie raz w tygodniu, o wybranej godzinie
+  schedule:
+    - cron: "0 0 * * 0" # W każdą niedzielę o północy
+
+jobs:
+  build:
+    name: Build EXE and Upload
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x # Wybierz wersję Pythona
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+
+      - name: Build EXE
+        run: pyinstaller --onefile main.py # Zmień "main.py" na właściwą nazwę pliku
+
+      - name: Upload EXE artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: MyEXE # Nadaj nazwę artefaktowi
+          path: dist/main.exe # Zmień "main.exe" na właściwą ścieżkę do pliku .exe
